@@ -92,7 +92,7 @@ namespace L04
 
         }
 
-            static void test(string[] args)
+        static void test(string[] args)
             {
                 MockCustomerRepo repo = new MockCustomerRepo();
 
@@ -125,5 +125,6 @@ namespace L04
             }
 
 
-        }
     }
+}
+
