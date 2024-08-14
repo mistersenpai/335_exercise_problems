@@ -1,4 +1,8 @@
 
+using L07.Data;
+using Microsoft.EntityFrameworkCore;
+using L07.Model;
+
 namespace L07;
 
 public class Program
@@ -6,6 +10,11 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        //db shit
+        builder.Services.AddDbContext<WebAPIDBContext>(options =>
+            options.UseSqlite(builder.Configuration["WebAPIConnection"]));
+
 
         // Add services to the container.
         builder.Services.AddAuthorization();
@@ -31,5 +40,12 @@ public class Program
         app.MapControllers();
 
         app.Run();
+    }
+
+    private static void AddRecord()
+    {
+        List<Customer> customers = new List<Customer>() { 
+        new Customer {Id=1, FirstName="John",LastName="Minton"}
+        };
     }
 }
