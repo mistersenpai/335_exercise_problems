@@ -11,11 +11,14 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        // builder.Services.AddScoped<IWebAPIRepo, DBWebAPIRepo>;
+
+
         //db shit
         builder.Services.AddDbContext<WebAPIDBContext>(options =>
             options.UseSqlite(builder.Configuration["WebAPIConnection"]));
 
-
+        
         // Add services to the container.
         builder.Services.AddAuthorization();
 
