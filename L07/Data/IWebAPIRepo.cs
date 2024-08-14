@@ -6,7 +6,7 @@ namespace L07.Data
     {
         IEnumerable<Customer> GetAllCustomers();
 
-        Customer getCustomerByID(int id);
+        Customer GetCustomerByID(int id);
 
         Customer AddCustomer(Customer customer);
     }

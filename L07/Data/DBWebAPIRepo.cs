@@ -21,7 +21,7 @@ namespace L07.Data
             return customer;
         }
 
-        public Customer getCustomerByID(int id)
+        public Customer GetCustomerByID(int id)
         {
             Customer customer = _dbContext.Customer.FirstOrDefault(c => c.Id == id);
             return customer;
@@ -32,6 +32,11 @@ namespace L07.Data
             _dbContext.Customer.Add(customer);
             _dbContext.SaveChanges();
             return customer;
+        }
+
+        public void SaveChanges()
+        {
+            _dbContext.SaveChanges();
         }
     }
 }
