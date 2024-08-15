@@ -37,10 +37,11 @@ namespace L07.Controllers
             {
                 CustomerOutDto c = new CustomerOutDto { Id = customer.Id, FirstName = customer.FirstName, LastName = customer.LastName };
                 return Ok(c);
-            }
+            } 
 
         }
 
+        //Post reuest
         [HttpPost("AddCustomer")]
         public ActionResult<CustomerOutDto> AddCustomer(CustomerInputDto customer)
         {
