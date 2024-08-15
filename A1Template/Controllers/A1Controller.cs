@@ -26,6 +26,29 @@ namespace A1.Controllers
         }
 
         //api 2 - get logo of group
+        [HttpGet("Logo")]
+        public ActionResult Logo() { 
+        
+            string path = Directory.GetCurrentDirectory();
+            string imgDir = Path.Combine(path, "Logos");
+
+            // Bold assumption this will always be a png lol
+            string fileName1 = Path.Combine(imgDir, "Logo.png");
+            string respHeader = "";
+            string fileName = "";
+
+            // Check if it exists
+            if (System.IO.File.Exists(fileName1))
+            {
+                respHeader = "image/png";
+                fileName = fileName1;
+            } 
+            else
+            {
+                return NotFound("File not found");
+            }
+            return PhysicalFile(fileName,respHeader);
+        }
 
         //api 3 - get signs
 
