@@ -7,7 +7,7 @@ namespace A1.Controllers
 {
     [Route("webapi")]
 
-    [ApiController]    
+    [ApiController]
     public class A1Controller : Controller
     {
         private readonly IA1Repo _repository;
@@ -27,8 +27,8 @@ namespace A1.Controllers
 
         //api 2 - get logo of group
         [HttpGet("Logo")]
-        public ActionResult Logo() { 
-        
+        public ActionResult Logo() {
+
             string path = Directory.GetCurrentDirectory();
             string imgDir = Path.Combine(path, "Logos");
 
@@ -42,17 +42,31 @@ namespace A1.Controllers
             {
                 respHeader = "image/png";
                 fileName = fileName1;
-            } 
+            }
             else
             {
                 return NotFound("File not found");
             }
-            return PhysicalFile(fileName,respHeader);
+            return PhysicalFile(fileName, respHeader);
         }
 
         //api 3 - get signs
+        [HttpGet("AllSigns")]
+        public ActionResult AllSigns()
+        {
+            IEnumerable<Signs> signs = _repository.AllSigns();
+            return Ok(signs);
+        }
 
         //api 4 - list signs
+        [HttpGet(("Signs/{text}"))]
+        public ActionResult Signs(string text)
+        {
+            IEnumerable<Signs> signs = _repository.Signs(text);
+
+            return Ok(signs);
+        }
+
 
         //api 5 get image of sign
 
