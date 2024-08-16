@@ -4,6 +4,9 @@ namespace A1.Dtos
 {
     public class CommentInput
     {
+        [Key]
+        [Required]
+        public int Id { get; set; }
         [Required]
         public string Time {  get; set; }
         [Required]

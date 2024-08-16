@@ -7,7 +7,7 @@ namespace A1.Data
     {
         public A1DbContext(DbContextOptions<A1DbContext> options) : base(options){ }
         public DbSet<Comment> Comment { get; set; }
-        public DbSet<Signs> Signs { get; set; }
+        public DbSet<Sign> Signs { get; set; }
 
     }
 }

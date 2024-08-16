@@ -11,14 +11,15 @@ namespace A1.Data
         //api 2 - get logo of group
 
         //api 3 - get signs
-        IEnumerable<Signs> AllSigns();
+        IEnumerable<Sign> AllSigns();
 
         //api 4 - list signs
-        IEnumerable<Signs> Signs(string text);
+        IEnumerable<Sign> Signs(string text);
 
         //api 5 get image of sign
 
         //api 6 get comment given id
+        Comment GetComment(int id);
 
         //api 7 post comment
 

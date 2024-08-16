@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using A1.Data;
 using A1.Model;
+using A1.Dtos;
 
 
 namespace A1.Controllers
@@ -54,29 +55,83 @@ namespace A1.Controllers
         [HttpGet("AllSigns")]
         public ActionResult AllSigns()
         {
-            IEnumerable<Signs> signs = _repository.AllSigns();
+            IEnumerable<Sign> signs = _repository.AllSigns();
             return Ok(signs);
         }
 
         //api 4 - list signs
-        [HttpGet(("Signs/{text}"))]
+        [HttpGet("Signs/{text}")]
         public ActionResult Signs(string text)
         {
-            IEnumerable<Signs> signs = _repository.Signs(text);
+            IEnumerable<Sign> signs = _repository.Signs(text);
 
             return Ok(signs);
         }
 
 
         //api 5 get image of sign
+        [HttpGet(("SignImage/{name}"))]
+        public ActionResult SignImage(string name)
+        {
+            string path = Directory.GetCurrentDirectory();
+            string imgDir = Path.Combine(path, "SignsImages");
+            string filename1 = Path.Combine(imgDir, name + ".png");
+            string filename2 = Path.Combine(imgDir, name + ".jpg");
+            string filename3 = Path.Combine(imgDir, name + ".gif");
+            string respHeader = "";
+            string fileName = "";
+
+            // Check if it exists
+            if (System.IO.File.Exists(filename1))
+            {
+                respHeader = "image/png";
+                fileName = filename1;
+            } 
+            else if (System.IO.File.Exists(filename2))
+            {
+                respHeader = "image/jpg";
+                fileName = filename2;
+            }
+            else if (System.IO.File.Exists(filename3))
+            {
+                respHeader = "image/gif";
+                fileName = filename3;
+            }
+            else
+            {
+                respHeader = "image/png";
+                fileName = Path.Combine(imgDir, "default.png");
+
+                return PhysicalFile(fileName, respHeader);
+            }
+
+            return PhysicalFile(fileName, respHeader);
+
+
+
+        }
 
         //api 6 get comment given id
+        [HttpGet("GetComment/{id}")]
+        public ActionResult GetComment(int id)
+        {
+            Comment comment = _repository.GetComment(id);
+            if (comment != null)
+            {
+                CommentInput input = new CommentInput {  Id = comment.Id, Time = comment.Time, UserComment = comment.UserComment, Name = comment.Name, IP = comment.IP};
+                return Ok(input);
+            }
+            else 
+            {
+                return BadRequest($"Comment {id} does not exist.");
+            }
+        }
 
         //api 7 post comment
 
         //api 8 display all comments
     }
-
+    // 027 775 2501
 
 
 

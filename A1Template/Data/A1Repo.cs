@@ -24,17 +24,17 @@ namespace A1.Data
         //api 2 - get logo of group
 
         //api 3 - get signs
-        public IEnumerable<Signs> AllSigns()
+        public IEnumerable<Sign> AllSigns()
         {
-            IEnumerable<Signs> signs = _dbcontext.Signs.ToList();
+            IEnumerable<Sign> signs = _dbcontext.Signs.ToList();         
             return signs;
         }
 
         //api 4 - list signs
-        public IEnumerable<Signs> Signs(string text) 
+        public IEnumerable<Sign> Signs(string text) 
         {
             //Enter into cheat sheet
-            IEnumerable<Signs> desiredOutput = _dbcontext.Signs.Where(e => e.Description.ToLower().Contains(text)).ToList();
+            IEnumerable<Sign> desiredOutput = _dbcontext.Signs.Where(e => e.Description.ToLower().Contains(text)).ToList();
 
 
             return desiredOutput;
@@ -43,6 +43,11 @@ namespace A1.Data
         //api 5 get image of sign
 
         //api 6 get comment given id
+        public Comment GetComment(int id)
+        {
+            Comment comment = _dbcontext.Comment.FirstOrDefault(e => e.Id == id);
+            return comment;
+        }
 
         //api 7 post comment
 

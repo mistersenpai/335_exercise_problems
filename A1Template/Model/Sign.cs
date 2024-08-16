@@ -2,7 +2,7 @@
 
 namespace A1.Model
 {
-    public class Signs
+    public class Sign
     {
         [Key]
         public string Id { get; set; }
