@@ -45,7 +45,7 @@ namespace A1.Data
         //api 6 get comment given id
         public Comment GetComment(int id)
         {
-            Comment comment = _dbcontext.Comment.FirstOrDefault(e => e.Id == id);
+            Comment comment = _dbcontext.Comments.FirstOrDefault(e => e.Id == id);
             return comment;
         }
 
