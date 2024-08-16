@@ -50,6 +50,12 @@ namespace A1.Data
         }
 
         //api 7 post comment
+        public Comment WriteComment(Comment comment) 
+        {
+            _dbcontext.Comments.Add(comment);
+            _dbcontext.SaveChanges();
+            return comment;
+        }
 
         //api 8 display all comments
 

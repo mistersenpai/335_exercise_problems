@@ -118,7 +118,7 @@ namespace A1.Controllers
             Comment comment = _repository.GetComment(id);
             if (comment != null)
             {
-                CommentInput input = new CommentInput {  Id = comment.Id, Time = comment.Time, UserComment = comment.UserComment, Name = comment.Name, IP = comment.IP};
+                Comment input = new Comment {  Id = comment.Id, Time = comment.Time, UserComment = comment.UserComment, Name = comment.Name, IP = comment.IP};
                 return Ok(input);
             }
             else 
@@ -128,6 +128,17 @@ namespace A1.Controllers
         }
 
         //api 7 post comment
+        [HttpPost("WriteComment")]
+        public ActionResult<CommentInput> WriteComment(CommentInput comment)
+        {
+            var myIP = (Request.HttpContext.Connection.RemoteIpAddress).ToString();
+            var time = DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ");
+            Comment comm = new Comment { UserComment = comment.UserComment, Name = comment.Name, Time = time, IP= myIP };
+            Comment addedComment = _repository.WriteComment(comm);
+
+
+            return CreatedAtAction(nameof(GetComment), new {id = addedComment.Id}, addedComment);
+        }
 
 
         //api 8 display all comments

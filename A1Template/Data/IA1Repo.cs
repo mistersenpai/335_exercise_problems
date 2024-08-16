@@ -22,6 +22,7 @@ namespace A1.Data
         Comment GetComment(int id);
 
         //api 7 post comment
+        Comment WriteComment(Comment comment);
 
         //api 8 display all comments
     }
