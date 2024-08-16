@@ -140,8 +140,13 @@ namespace A1.Controllers
             return CreatedAtAction(nameof(GetComment), new {id = addedComment.Id}, addedComment);
         }
 
-
         //api 8 display all comments
+        [HttpGet("Comments/{numOfComments}")]
+        public ActionResult Comments(int numOfComments) 
+        { 
+            IEnumerable<Comment> comments = _repository.Comments(numOfComments);
+            return Ok(comments);
+        }
     }
     // 027 775 2501
 

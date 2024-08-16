@@ -25,5 +25,6 @@ namespace A1.Data
         Comment WriteComment(Comment comment);
 
         //api 8 display all comments
+        IEnumerable<Comment> Comments(int numOfComments);
     }
 }

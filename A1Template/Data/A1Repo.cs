@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using A1.Model;
+using System.Linq;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
 
 namespace A1.Data
 {
@@ -55,6 +58,26 @@ namespace A1.Data
             _dbcontext.Comments.Add(comment);
             _dbcontext.SaveChanges();
             return comment;
+        }
+
+        public IEnumerable<Comment> Comments(int numOfComments) 
+        {
+            IEnumerable<Comment> comments = _dbcontext.Comments.OrderByDescending(c => c.Id).ToList<Comment>();
+            if (numOfComments >= 0)
+            {
+                if (numOfComments > comments.Count())
+                {
+                    return comments;
+                }
+                else
+                {
+                    return comments.Take(numOfComments);
+                }
+            }
+            else
+            {
+                return comments.Take(0);
+            }
         }
 
         //api 8 display all comments
