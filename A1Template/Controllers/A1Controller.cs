@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using A1.Data;
-using A1.Model;
+using A1.Models;
 using A1.Dtos;
 
 
@@ -142,17 +142,12 @@ namespace A1.Controllers
 
         //api 8 display all comments
         [HttpGet("Comments/{numOfComments}")]
-        public ActionResult Comments(int numOfComments) 
+        public ActionResult Comments(int? numOfComments = 5) 
         { 
             IEnumerable<Comment> comments = _repository.Comments(numOfComments);
             return Ok(comments);
         }
     }
-    // 027 775 2501
-
-
-
-
 
 
 }

@@ -1,4 +1,4 @@
-﻿using A1.Model;
+﻿using A1.Models;
 
 
 namespace A1.Data
@@ -25,6 +25,6 @@ namespace A1.Data
         Comment WriteComment(Comment comment);
 
         //api 8 display all comments
-        IEnumerable<Comment> Comments(int numOfComments);
+        IEnumerable<Comment> Comments(int? numOfComments);
     }
 }

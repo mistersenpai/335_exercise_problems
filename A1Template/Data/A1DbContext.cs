@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using A1.Model;
+using A1.Models;
 
 namespace A1.Data
 {
