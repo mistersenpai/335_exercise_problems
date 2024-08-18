@@ -1,6 +1,7 @@
 ﻿namespace L14_ex.Data
 {
-    public interface IL4Repo
+    public interface IL14Repo
     {
+        
     }
 }

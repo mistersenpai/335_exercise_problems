@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using L14_ex.Data;
 
 namespace L14_ex;
 
@@ -6,6 +8,9 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        // Connecting to db
+        builder.Services.AddDbContext<L14DbContext>(options => options.UseSqlite(builder.Configuration["WebAPIConnection"]));
 
         // Add services to the container.
         builder.Services.AddAuthorization();
