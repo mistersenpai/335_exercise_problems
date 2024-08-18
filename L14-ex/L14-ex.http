@@ -1,0 +1,6 @@
+@L14_ex_HostAddress = http://localhost:5012
+
+GET {{L14_ex_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
