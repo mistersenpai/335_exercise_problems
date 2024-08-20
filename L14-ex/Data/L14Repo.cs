@@ -7,5 +7,12 @@
         { 
             _dbContext = dbContext;
         }
+
+        public string SayHello()
+        {
+            string word = ("Hello, World!");
+
+            return word;
+        }
     }
 }

@@ -8,9 +8,11 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        builder.Services.AddControllers();
 
         // Connecting to db
         builder.Services.AddDbContext<L14DbContext>(options => options.UseSqlite(builder.Configuration["WebAPIConnection"]));
+
 
         // Add services to the container.
         builder.Services.AddAuthorization();

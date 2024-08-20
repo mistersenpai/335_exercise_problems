@@ -2,6 +2,6 @@
 {
     public interface IL14Repo
     {
-        
+        string SayHello();
     }
 }
