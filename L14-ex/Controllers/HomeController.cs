@@ -2,6 +2,8 @@
 using L14_ex.Models;
 using L14_ex.Data;
 using L14_ex.Dtos;
+using Microsoft.AspNetCore.Authorization;
+using System.Net;
 
 namespace L14_ex.Controllers
 {
@@ -23,12 +25,29 @@ namespace L14_ex.Controllers
             return Ok(word);
         }
 
+        [Authorize(AuthenticationSchemes = "AdminAuthentication")]
+        [Authorize(Policy ="AdminOnly")]
         [HttpGet("GetUsers")]
-        public ActionResult GetUsers()
+        public ActionResult<IEnumerable<UserOutput>> GetUsers()
         {
-          IEnumerable<User> users = _repository.GetUsers();
+            IEnumerable<User> users = _repository.GetUsers();
+            IEnumerable<UserOutput> uOut = users.Select(e =>
+                new UserOutput { UserName = e.UserName, Position = e.Position}
 
-            return Ok(users);
+            );
+
+            return Ok(uOut);
+        }
+
+        [HttpGet("makewebsite")]
+        public ContentResult get335()
+        {
+            string cs335 = "<html><body>This is cs335<h1> sugma nutts</h1></body></html>";
+
+
+
+            ContentResult content = new ContentResult { Content = cs335, ContentType = "text/html", StatusCode = (int)HttpStatusCode.OK };
+            return content;
         }
 
         //[HttpPost("Add User")]

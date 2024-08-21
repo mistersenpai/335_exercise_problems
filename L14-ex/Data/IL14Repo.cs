@@ -10,6 +10,8 @@ namespace L14_ex.Data
 
         //User AddUser(User user);
 
+        bool ValidLogin(string username, string password);
+
 
     }
 }

@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using L14_ex.Data;
+using L14_ex.Handlers;
+using Microsoft.AspNetCore.Authentication;
 
 namespace L14_ex;
 
@@ -15,8 +17,12 @@ public class Program
 
 
         // Add services to the container.
-        // builder.Services.AddAuthentication().AddScheme();
-        builder.Services.AddAuthorization();
+        builder.Services
+            .AddAuthentication()
+            .AddScheme<AuthenticationSchemeOptions, AuthHandler>("MyAuthentication", null)
+            .AddScheme<AuthenticationSchemeOptions, AdminHandler>("AdminAuthentication", null);
+
+        
         
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -24,6 +30,13 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         builder.Services.AddScoped<IL14Repo, L14Repo>();
+
+        builder.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("AdminOnly", policy => policy.RequireClaim("admin"));
+            options.AddPolicy("UserOnly", policy => policy.RequireClaim("userName"));
+        }
+        );
 
         var app = builder.Build();
 
@@ -35,7 +48,7 @@ public class Program
         }
 
         app.UseHttpsRedirection();
-
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();

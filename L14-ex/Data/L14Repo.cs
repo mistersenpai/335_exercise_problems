@@ -32,5 +32,16 @@ namespace L14_ex.Data
 
         //    return user;
         //}
+
+        public bool ValidLogin(string username, string password) 
+        {
+            User c = _dbContext.Users.FirstOrDefault(e => e.UserName == username && e.Password == password);
+
+            if (c == null)
+            {
+                return false;
+            }
+            else {return true;}
+        }
     }
 }
