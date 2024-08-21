@@ -1,12 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace L14_ex.Models
+namespace L14_ex.Dtos
 {
-    public class User
+    public class UserInput
     {
-        [Key]
-        [Required]
-        public int Id { get; set; }
         [Required]
         public string UserName { get; set; }
         [Required]

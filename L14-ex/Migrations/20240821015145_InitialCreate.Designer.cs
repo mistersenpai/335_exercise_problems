@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace L14_ex.Migrations
 {
     [DbContext(typeof(L14DbContext))]
-    [Migration("20240820220211_InitialCreate")]
+    [Migration("20240821015145_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -40,7 +40,7 @@ namespace L14_ex.Migrations
 
             modelBuilder.Entity("L14_ex.Models.User", b =>
                 {
-                    b.Property<int>("Username")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -52,7 +52,11 @@ namespace L14_ex.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Username");
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });

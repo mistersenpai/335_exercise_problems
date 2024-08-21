@@ -28,14 +28,15 @@ namespace L14_ex.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Username = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    UserName = table.Column<string>(type: "TEXT", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false),
                     Position = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Username);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
         }
 

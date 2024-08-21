@@ -15,11 +15,15 @@ public class Program
 
 
         // Add services to the container.
+        // builder.Services.AddAuthentication().AddScheme();
         builder.Services.AddAuthorization();
+        
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+        builder.Services.AddScoped<IL14Repo, L14Repo>();
 
         var app = builder.Build();
 
@@ -33,6 +37,8 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
+
+        app.MapControllers();
 
         app.Run();
     }

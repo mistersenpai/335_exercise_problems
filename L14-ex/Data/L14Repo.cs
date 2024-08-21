@@ -1,4 +1,7 @@
-﻿namespace L14_ex.Data
+﻿using L14_ex.Models;
+
+namespace L14_ex.Data
+
 {
     public class L14Repo: IL14Repo
     {
@@ -14,5 +17,20 @@
 
             return word;
         }
+
+
+        public IEnumerable<User> GetUsers()
+        {
+            IEnumerable<User> users = _dbContext.Users.ToList();
+            return users;
+        }
+
+        //public User AddUser(User user) 
+        //{ 
+        //    _dbContext.Users.Add(user);
+        //    _dbContext.SaveChanges();
+
+        //    return user;
+        //}
     }
 }

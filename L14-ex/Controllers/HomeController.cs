@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using L14_ex.Models;
 using L14_ex.Data;
+using L14_ex.Dtos;
 
 namespace L14_ex.Controllers
 {
@@ -21,6 +22,25 @@ namespace L14_ex.Controllers
 
             return Ok(word);
         }
-       
+
+        [HttpGet("GetUsers")]
+        public ActionResult GetUsers()
+        {
+          IEnumerable<User> users = _repository.GetUsers();
+
+            return Ok(users);
+        }
+
+        //[HttpPost("Add User")]
+        //public ActionResult<UserInput> WriteUser(UserInput user)
+        //{
+
+        //    User newUser = new User { UserName = user.UserName, Password = user.Password, Position = user.Position };
+        //    User addUser = _repository.AddUser(newUser);
+
+        //    return CreatedAtAction(newUser.UserName, newUser, addUser);
+        //}
+
+
     }
 }

@@ -37,7 +37,7 @@ namespace L14_ex.Migrations
 
             modelBuilder.Entity("L14_ex.Models.User", b =>
                 {
-                    b.Property<int>("Username")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -49,7 +49,11 @@ namespace L14_ex.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Username");
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
