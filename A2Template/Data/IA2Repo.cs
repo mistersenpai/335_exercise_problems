@@ -6,6 +6,10 @@ namespace A2.Data
     {
         string sayHello();
 
+        Boolean ValidLogin(string username, string password);
+
         User Register(User user);
+
+        // string PurchaseSign(string SignID);
     }
 }

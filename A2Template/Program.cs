@@ -14,6 +14,13 @@ public class Program
         builder.Services.AddDbContext<A2DbContext>(options => options.UseSqlite(builder.Configuration["A2DBConnection"]));
         builder.Services.AddScoped<IA2Repo, A2Repo>();
 
+        //autheticate stuff
+        builder.Services.AddAuthentication().AddScheme<AuthenticationSchemeOptions, A2AuthHandler>("MyAuthentication", null);
+
+        builder.Services.AddAuthorization(options => {
+            options.AddPolicy("normalUser", policy => policy.RequireClaim("userName"));
+        });
+
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -31,6 +38,7 @@ public class Program
 
         app.UseHttpsRedirection();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();

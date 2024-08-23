@@ -15,6 +15,19 @@ namespace A2.Data
             return "hello";
         }
 
+        public Boolean ValidLogin(string username, string password) 
+        { 
+            User check = _dbContext.Users.FirstOrDefault(u => u.UserName == username && u.Password == password);
+
+            if (check != null) 
+            {
+                return false;
+            }
+
+            return true;
+
+        }
+
         public User Register(User user)
         {
             //must be null
