@@ -38,12 +38,24 @@ public class A2AuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 
             if (_repository.ValidLogin(username, password)) 
             {
-                var claims = new[] { new Claim("normalUser", username) };
+                var claims = new[] { new Claim(ClaimTypes.Name, username), new Claim(ClaimTypes.Role, "normalUser") };
                 ClaimsIdentity identity = new ClaimsIdentity(claims, "Basic");
                 ClaimsPrincipal principal = new ClaimsPrincipal(identity);
                 AuthenticationTicket ticket = new AuthenticationTicket(principal, Scheme.Name);
                 return AuthenticateResult.Success(ticket);
             }
+            else if (_repository.ValidOrganizer(username, password))
+            {
+                var claims = new[] { new Claim(ClaimTypes.Name, username), new Claim(ClaimTypes.Role, "organizer") };
+                ClaimsIdentity identity = new ClaimsIdentity(claims, "Basic");
+                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+                AuthenticationTicket ticket = new AuthenticationTicket(principal, Scheme.Name);
+                return AuthenticateResult.Success(ticket);
+            }
+
+
+
+
 
 
             return AuthenticateResult.Fail($"invalid user: {username}, {password}");

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using A2.Data;
+using System.Security.Claims;
 
 namespace P1;
 
@@ -17,9 +18,20 @@ public class Program
         //autheticate stuff
         builder.Services.AddAuthentication().AddScheme<AuthenticationSchemeOptions, A2AuthHandler>("MyAuthentication", null);
 
-        builder.Services.AddAuthorization(options => {
-            options.AddPolicy("normalUser", policy => policy.RequireClaim("userName"));
+        builder.Services.AddAuthorization(options =>
+        {
+
+            //options.AddPolicy("adminUser", policy =>
+            //{
+            //    policy.RequireAssertion(context =>
+            //   context.User.HasClaim(c =>
+            //   (c.Value == "normalUser" || c.Value == "organizer")));
+            //});
+            options.AddPolicy("organizer", policy => policy.RequireClaim(ClaimTypes.Role, "organizer"));
+            options.AddPolicy("normalUser", policy => policy.RequireClaim(ClaimTypes.Role,"normalUser"));
+
         });
+
 
 
         builder.Services.AddControllers();
