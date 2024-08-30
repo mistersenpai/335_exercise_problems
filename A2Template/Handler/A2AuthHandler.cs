@@ -53,11 +53,6 @@ public class A2AuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
                 return AuthenticateResult.Success(ticket);
             }
 
-
-
-
-
-
             return AuthenticateResult.Fail($"invalid user: {username}, {password}");
         }
 

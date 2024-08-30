@@ -37,7 +37,8 @@ public class A2Controller : Controller
             return Ok($"Username {user.UserName} is not available.");
         }
 
-        return CreatedAtAction(nameof(Register), u, "User succesfully registered.");
+        CreatedAtAction(nameof(Register), u, "User succesfully registered.");
+        return Ok("User succesfully registered.");
     }
 
     [Authorize(AuthenticationSchemes = "MyAuthentication")]
@@ -95,6 +96,37 @@ public class A2Controller : Controller
 
         Event toadd = _repository.AddEvent(e);
 
-        return CreatedAtAction(nameof(Event),new {id = toadd.Id}, toadd);
+        CreatedAtAction(nameof(AddEvent),new {id = toadd.Id}, toadd);
+        return Ok("Success");
+
+    }
+
+    [Authorize(AuthenticationSchemes = "MyAuthentication")]
+    [Authorize(Policy = "bothUsers")]
+    [HttpGet("EventCount")]
+    public ActionResult<int> EventCount()
+    {
+        int countEvents = _repository.EventCount();
+
+        return Ok(countEvents);
+    }
+
+    [Authorize(AuthenticationSchemes = "MyAuthentication")]
+    [Authorize(Policy = "bothUsers")]
+    [HttpGet("Event/{id}")]
+    public ActionResult<Event> Event(int id)
+    {
+
+        Event _event = _repository.Event(id);
+
+        if (_event == null)
+        {
+            return BadRequest($"Event {id} does not exist.");
+        }
+        Response.Headers.Add("Content-Type", "text/vcard");
+
+
+        return Ok(_event);
+
     }
 }

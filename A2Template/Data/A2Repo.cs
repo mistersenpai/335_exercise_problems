@@ -72,7 +72,7 @@ namespace A2.Data
             return toAddEvent;
         }
 
-        private bool IsDateValid(string date)
+        public bool IsDateValid(string date)
         {
             string desiredoutput = "yyyyMMddTHHmmssZ";
 
@@ -88,6 +88,19 @@ namespace A2.Data
             }
 
             return false;
+        }
+        public int EventCount()
+        {
+            int countEvents = _dbContext.Events.Count();
+
+            return countEvents;
+        }
+
+        public Event Event(int id)
+        {
+            Event getEvent = _dbContext.Events.FirstOrDefault(e =>  e.Id == id);
+
+            return getEvent;
         }
 
 

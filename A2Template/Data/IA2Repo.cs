@@ -18,6 +18,10 @@ namespace A2.Data
 
         bool IsDateValid(string date);
 
+        int EventCount();
+
+        Event Event(int id);
+
         // string PurchaseSign(string SignID);
     }
 }

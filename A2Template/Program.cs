@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using A2.Data;
+using A2.Helper;
 using System.Security.Claims;
 
 namespace P1;
@@ -21,23 +22,25 @@ public class Program
         builder.Services.AddAuthorization(options =>
         {
 
-            //options.AddPolicy("adminUser", policy =>
-            //{
-            //    policy.RequireAssertion(context =>
-            //   context.User.HasClaim(c =>
-            //   (c.Value == "normalUser" || c.Value == "organizer")));
-            //});
+            options.AddPolicy("bothUsers", policy =>
+            {
+                policy.RequireAssertion(context =>
+               context.User.HasClaim(c =>
+               (c.Value == "normalUser" || c.Value == "organizer")));
+            });
             options.AddPolicy("organizer", policy => policy.RequireClaim(ClaimTypes.Role, "organizer"));
             options.AddPolicy("normalUser", policy => policy.RequireClaim(ClaimTypes.Role,"normalUser"));
 
         });
 
-
+        builder.Services.AddMvc(options => options.OutputFormatters.Add(new CalenderOutputFormatter()));
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+       
 
         var app = builder.Build();
 
