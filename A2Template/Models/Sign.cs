@@ -5,8 +5,7 @@ namespace A2.Models
     public class Sign
     {
         [Key]
-        [Required]
-        public int Id { get; set; }
+        public string Id { get; set; }
         [Required]
         public string Description { get; set; }
     }

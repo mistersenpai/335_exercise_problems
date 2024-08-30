@@ -56,5 +56,40 @@ namespace A2.Data
             return user;
         }
 
+        public Sign CheckSign(string id)
+        {
+            Sign check = _dbContext.Signs.FirstOrDefault(s => s.Id == id);
+
+            return check;
+
+        }
+
+        public Event AddEvent(Event toAddEvent)
+        {
+            _dbContext.Events.Add(toAddEvent);
+            _dbContext.SaveChanges();
+
+            return toAddEvent;
+        }
+
+        private bool IsDateValid(string date)
+        {
+            string desiredoutput = "yyyyMMddTHHmmssZ";
+
+
+            if (date.Length == desiredoutput.Length && date[8] == 'T' && date[date.Length - 1] == 'Z')
+            {
+
+                DateTime parsedDate;
+                if (DateTime.TryParseExact(date, desiredoutput, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out parsedDate))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
     }
 }

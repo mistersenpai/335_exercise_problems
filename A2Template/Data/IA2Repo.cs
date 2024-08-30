@@ -12,6 +12,12 @@ namespace A2.Data
 
         User Register(User user);
 
+        Sign CheckSign(string id);
+
+        Event AddEvent(Event toAddEvent);
+
+        bool IsDateValid(string date);
+
         // string PurchaseSign(string SignID);
     }
 }

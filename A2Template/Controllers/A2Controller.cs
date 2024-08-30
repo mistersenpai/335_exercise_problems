@@ -45,39 +45,56 @@ public class A2Controller : Controller
     [HttpGet("PurchaseSign/{id}")]
     public ActionResult<PurchaseOutput> PurchaseSign(string id)
     {
-        string path = Directory.GetCurrentDirectory();
-        string imgDir = Path.Combine(path, "SignsImages");
-        string fileName1 = Path.Combine(imgDir, id + ".png");
-        string fileName2 = Path.Combine(imgDir, id + ".gif");
-        string fileName3 = Path.Combine(imgDir, id + ".jpg");
-        string respHeader = "";
-        string fileName = "";
-
-        if (System.IO.File.Exists(fileName1))
+        //check sign first
+        Sign doesExist = _repository.CheckSign(id);
+        if (doesExist == null)
         {
-            respHeader = "image/png";
-            fileName = fileName1;
+            return BadRequest($"Sign {id} not found");
         }
-        else if (System.IO.File.Exists(fileName2))
-        {
-            respHeader = "image/gif";
-            fileName = fileName2;
-        }
-        else if (System.IO.File.Exists(fileName3))
-        {
-            respHeader = "image/jpeg";
-            fileName = fileName3;
-        }
-        else { return BadRequest($"Sign {id} not found"); }
 
         ClaimsIdentity ci = HttpContext.User.Identities.FirstOrDefault();
-        Claim c = ci.FindFirst("userName");
-        string userName1 = c.Value;
+        Claim claim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+        string userName1 = claim.Value.ToString();
 
 
-        PurchaseOutput purchaseOutput = new PurchaseOutput{signID = fileName, userName = userName1 };
+        PurchaseOutput purchaseOutput = new PurchaseOutput{signID = id, userName = userName1 };
 
 
         return Ok(purchaseOutput);
+    }
+
+    [Authorize(AuthenticationSchemes = "MyAuthentication")]
+    [Authorize(Policy = "organizer")]
+    [HttpPost("AddEvent")]
+    public ActionResult<Event> AddEvent(EventInput userEvent)
+    {
+
+        Claim claim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+        if (claim.GetType().ToString() == "normalUser")
+        {
+            return Forbid();
+        }
+        // check start and end date
+        if (!(_repository.IsDateValid(userEvent.Start)) && !(_repository.IsDateValid(userEvent.End)))
+        {
+            return BadRequest("Start and End Date are not valid datetime objects");
+        }
+        
+        // check start 
+        else if (!(_repository.IsDateValid(userEvent.Start)))
+        {
+            return BadRequest("Start Date are not valid datetime objects");
+        }
+        // check end 
+        if (!(_repository.IsDateValid(userEvent.End)))
+        {
+            return BadRequest("End Date are not valid datetime objects");
+        }
+
+        Event e = new Event { Description = userEvent.Description, End = userEvent.End, Summary = userEvent.Summary, Location = userEvent.Location, Start = userEvent.Start };
+
+        Event toadd = _repository.AddEvent(e);
+
+        return CreatedAtAction(nameof(Event),new {id = toadd.Id}, toadd);
     }
 }
