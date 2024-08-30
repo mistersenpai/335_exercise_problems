@@ -19,8 +19,8 @@ namespace A2.Helper
             string userTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ");
             StringBuilder builder = new StringBuilder();
             builder.AppendLine("BEGIN:VCALEBDAR");
-            builder.AppendLine("VERSION:4.0");
-            builder.AppendLine("PRODID:" + "skri486");
+            builder.AppendLine("VERSION:2.0");
+            builder.AppendLine("PRODID:" + "jmin479");
             builder.AppendLine("BEGIN:VEVENT");
             builder.AppendLine("UID:" + userEvent.Id);
             builder.AppendLine("DTSTAMP:" + userTime);

@@ -15,15 +15,15 @@ public class A2Controller : Controller
     {
         _repository = repository;
     }
-    [Authorize(AuthenticationSchemes = "MyAuthentication")]
-    [Authorize(Policy = "normalUser")]
-    [HttpGet("SayHello")]
-    public ActionResult SayHello()
-    {
-        string output = _repository.sayHello();
+    //[Authorize(AuthenticationSchemes = "MyAuthentication")]
+    //[Authorize(Policy = "normalUser")]
+    //[HttpGet("SayHello")]
+    //public ActionResult SayHello()
+    //{
+    //    string output = _repository.sayHello();
 
-        return Ok(output);
-    }
+    //    return Ok(output);
+    //}
 
     [HttpPost("Register")]
     public ActionResult<User> Register(User user)
@@ -34,7 +34,7 @@ public class A2Controller : Controller
 
         if (addedUser == null)
         {
-            return Ok($"Username {user.UserName} is not available.");
+            return Ok($"UserName {user.UserName} is not available.");
         }
 
         CreatedAtAction(nameof(Register), u, "User succesfully registered.");
