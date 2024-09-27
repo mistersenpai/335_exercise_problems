@@ -31,14 +31,12 @@ const showNZSL = () => { hideAllSections(); sectionNZSL.style.display = "block";
 const showEvents = () => { hideAllSections(); sectionEvents.style.display = "block"; getEvents(); };
 const showRegister = () => { hideAllSections(); sectionRegister.style.display = "block"; };
 const showLogin = () => { hideAllSections(); sectionLogin.style.display = "block"; };
-const showGuestBook = () => { hideAllSections(); sectionGuestBook.style.display = "block"; };
 
 navHome.addEventListener("click", showHome);
 navNZSL.addEventListener("click", showNZSL);
 navEvents.addEventListener("click", showEvents);
 navRegister.addEventListener("click", showRegister);
 navLogin.addEventListener("click", showLogin);
-navGuestBook.addEventListener("click", showGuestBook);
 
 /**
  * Fetches the application version from the API and displays it on the homepage.
@@ -278,24 +276,6 @@ function getEvents() {
 // navEvents.addEventListener("click", getEvents);
 
 
-// comments stuff
-
-document.getElementById("submit_comment").addEventListener("click", () => {
-    const commentText = document.getElementById("commentText").value;
-    submitComment(commentText);
-});
-
-const submitComment = (commentText) => {
-    const authHeader = localStorage.getItem('authHeader');
-    if (!authHeader) { showLogin(); return; }
-    fetch('https://cws.auckland.ac.nz/nzsl/api/Comment?comment=' + commentText, {
-        method: 'POST', headers: { 'Content-Type': 'text/plain', 'Authorization': authHeader }
-    }).then(() => {
-        const iframe = document.getElementById("CommentSection");
-        iframe.src = iframe.src;
-    });
-};
-
 // register
 
 document.getElementById("register_section").addEventListener("submit", (event) => {
@@ -369,3 +349,58 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
     loginMessage.innerText = 'Log in here.';  // Reset login message
     document.getElementById("logoutBtn").style.display = "none";  // Hide logout button
 });
+
+//comments
+
+function loadComments() {
+    const commentsList = document.getElementById("commentsList");
+
+    // Add debug log to ensure this function is being called
+    console.log("Loading comments...");
+
+    // Fetch the comments from the API (which returns HTML)
+    fetch('https://cws.auckland.ac.nz/nzsl/api/Comments', {
+        method: 'GET',
+        headers: { 'Content-Type': 'text/html' },  // Use text/html as content type
+    })
+    .then(response => response.text())  // Parse as text, not JSON
+    .then(htmlData => {
+        console.log("HTML Data fetched:", htmlData);  // Log the fetched HTML
+
+        // Create a temporary DOM element to parse the HTML string
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = htmlData;
+
+        // Select all <p> tags from the HTML (where comments are located)
+        const comments = tempDiv.querySelectorAll("p");
+
+        // Clear the current comments section
+        commentsList.innerHTML = "";
+
+        if (comments.length === 0) {
+            commentsList.innerHTML = "<li>No comments yet. Be the first to comment!</li>";
+        } else {
+            // Loop through all <p> elements and extract the comment text
+            comments.forEach(commentElement => {
+                const commentText = commentElement.innerText;
+                const listItem = document.createElement("li");
+                listItem.textContent = commentText;
+                commentsList.appendChild(listItem);
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching comments:', error);
+        commentsList.innerHTML = "<li>Failed to load comments. Please try again later.</li>";
+    });
+}
+
+// Call this function when the guestbook page is shown to load all comments
+function showGuestBook() {
+    hideAllSections();
+    sectionGuestBook.style.display = "block";
+    loadComments(); // Load comments when the guestbook page is opened
+}
+
+// Attach event listener for the guestbook nav
+navGuestBook.addEventListener("click", showGuestBook);
