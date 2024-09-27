@@ -1,0 +1,18 @@
+body {
+    background-image: linear-gradient(to right, blue , gray);
+}
+
+.NZSL_Logo {
+    height: 8%;
+    width:8%;
+}
+
+.menuItem{
+    margin: 5ex;
+    padding: 1ex;
+    flex-basis: 20%
+}
+
+h2 {
+    color:aliceblue;
+}
