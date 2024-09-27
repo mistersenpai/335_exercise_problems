@@ -300,17 +300,30 @@ const submitComment = (commentText) => {
 
 document.getElementById("register_section").addEventListener("submit", (event) => {
     event.preventDefault();
+    
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     const address = document.getElementById('address').value;
+    const registerMessage = document.getElementById('registerMessage');
+    
     fetch('https://cws.auckland.ac.nz/nzsl/api/Register', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password, address })
-    }).then(response => response.text())
-      .then(data => {
-        if (data.includes('Username not available')) alert('Username not available');
-        else alert('User registered successfully!');
-      });
+    })
+    .then(response => response.text())
+    .then(data => {
+        if (data.includes('Username not available')) {
+            registerMessage.innerText = `Username ${username} is not available.`;
+        } else {
+            registerMessage.innerText = `User ${username} registered.`;
+            document.getElementById("register_section").reset();  // Clears form inputs
+        }
+    })
+    .catch(error => {
+        registerMessage.innerText = 'An error occurred. Please try again.';
+        console.error('Error:', error);
+    });
 });
 
 document.getElementById("login_form").addEventListener("submit", (event) => {

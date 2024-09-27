@@ -25,7 +25,7 @@
     <section id="home" class="section active">
         <h2>Home</h2>
         <p>Haere mai, nau mai. Welcome to our application that helps us learn a wee bit of New Zealand Sign Language (NZSL, Te Reo Turi), one of the three official languages of Aotearoa New Zealand.</p>
-        <p id="versionText">Version: Loading...</p> <!-- Placeholder for version -->
+        
         </section>
 
 
@@ -45,12 +45,22 @@
 
 
     <section id="reg" class="section">
-        <form id="register_section">
-            <input type="text" id="username" placeholder="Username" required />
-            <input type="password" id="password" placeholder="Password" required />
-            <input type="text" id="address" placeholder="Address" required />
-            <button type="submit">Register</button>
-        </form>
+        <div class="form-container">
+            <h2>Register</h2>
+            <form id="register_section">
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="Username" required />
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Password" required />
+                </div>
+                <div class="input-group">
+                    <input type="text" id="address" placeholder="Address" required />
+                </div>
+                <button type="submit" class="register-btn">Register</button>
+            </form>
+            <p id="registerMessage" class="register-message">Please register here.</p> <!-- Display messages here -->
+        </div>
     </section>
 
 
@@ -69,6 +79,8 @@
         <button id="submit_comment">Submit Comment</button>
         <iframe id="CommentSection"></iframe>
     </section>
+
+    <p id="versionText">Version: Loading...</p> <!-- Placeholder for version -->
 
     <script src="jmin479.js" defer></script>
 </body>
