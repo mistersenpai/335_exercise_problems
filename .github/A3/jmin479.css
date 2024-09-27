@@ -252,3 +252,21 @@ input[type="password"] {
     visibility: visible; 
 }
 
+/* log out stuff and in stuff */
+.login-message {
+    color: white; /* Ensure it's visible */
+    font-size: 16px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.logout-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: block; /* Initially hidden, shown only after login */
+}

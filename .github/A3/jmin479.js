@@ -326,31 +326,46 @@ document.getElementById("register_section").addEventListener("submit", (event) =
     });
 });
 
-document.getElementById("login_form").addEventListener("submit", (event) => {
+
+// login/out stuff 
+document.getElementById("login_section").addEventListener("submit", (event) => {
     event.preventDefault();
+
     const username = document.getElementById('L-username').value;
     const password = document.getElementById('L-password').value;
+    const loginMessage = document.getElementById('loginMessage');
+    
     const authHeader = 'Basic ' + btoa(username + ':' + password);
+
+    // Fetch the login API with authentication
     fetch('https://cws.auckland.ac.nz/nzsl/api/TestAuth', {
-        method: 'GET', headers: { 'Authorization': authHeader }
-    }).then(response => {
+        method: 'GET',
+        headers: { 'Authorization': authHeader } 
+    })
+    .then(response => {
         if (response.ok) {
-            localStorage.setItem('authHeader', authHeader);
-            alert('Login successful!');
-            logoutButton.style.display = 'block';
-            navLogin.style.display = 'none';
-            navRegister.style.display = 'none';
-            loggedInStatus.style.display = 'block';
+            localStorage.setItem('authHeader', authHeader);  // Store auth header in localStorage
+            localStorage.setItem('username', username);  // Store username for future use
+            loginMessage.innerText = `User ${username} logged in.`;
+            document.getElementById("logoutBtn").style.display = "block";  // Show logout button
+            document.getElementById("login_section").reset();  // Clear the form
+        } else if (response.status === 401) {
+            loginMessage.innerText = 'Incorrect username or password.';
         } else {
-            alert('Login failed');
+            throw new Error('Unexpected error during login.');
         }
+    })
+    .catch(error => {
+        console.error('Error during login:', error);
+        loginMessage.innerText = 'An error occurred. Please try again.';
     });
 });
 
-logoutButton.addEventListener("click", () => {
-    localStorage.removeItem('authHeader');
-    logoutButton.style.display = 'none';
-    navLogin.style.display = 'block';
-    navRegister.style.display = 'block';
-    loggedInStatus.style.display = 'none';
+// Logout Functionality
+document.getElementById("logoutBtn").addEventListener("click", () => {
+    localStorage.removeItem('authHeader');  // Clear stored auth header
+    localStorage.removeItem('username');  // Clear stored username
+    const loginMessage = document.getElementById('loginMessage');
+    loginMessage.innerText = 'Log in here.';  // Reset login message
+    document.getElementById("logoutBtn").style.display = "none";  // Hide logout button
 });
