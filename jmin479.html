@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NZSL App</title>
+    <link rel="stylesheet" href="jmin479.css" />
+    <link rel="icon" href="https://cws.auckland.ac.nz/nzsl/api/Logo" type="image/x-icon" />
+</head>
+<body>
+    <nav class="navBar">
+        <img src="https://cws.auckland.ac.nz/nzsl/api/Logo" alt="NZSL Logo" class="NZSL_Logo" />
+        <div class="menu">
+            <div class="menuItem" id="navhome">Home</div>
+            <div class="menuItem" id="navNZSL">NZSL</div>
+            <div class="menuItem" id="navevents">Events</div>
+            <div class="menuItem" id="navreg">Register</div>
+            <div class="menuItem" id="navlogin">Login</div>
+            <div class="menuItem" id="navgbook">Guestbook</div>
+        </div>
+        <button id="logout_button">Logout</button>
+        <p id="logged_in">Logged in as User</p>
+    </nav>
+
+    <section id="home" class="section active">
+        <h2>Home</h2>
+        <p>Haere mai, nau mai. Welcome to our application that helps us learn a wee bit of New Zealand Sign Language (NZSL, Te Reo Turi), one of the three official languages of Aotearoa New Zealand.</p>
+        
+        </section>
+
+
+
+    <section id="NZSL" class="section">
+        <h2>NZSL</h2>
+        <input type="text" id="sign_search" placeholder="Search for a sign..." oninput="signSearch()">
+        <div id="NZSLsigns" class="sign-grid"></div>
+    </section>
+
+
+
+    <section id="events" class="section">
+        <h2>Events</h2>
+        <ul id="events_sec"></ul> <!-- Placeholder for the events list -->
+    </section>
+
+
+    <section id="reg" class="section">
+        <div class="form-container">
+            <h2>Register</h2>
+            <form id="register_section">
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="Username" required />
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Password" required />
+                </div>
+                <div class="input-group">
+                    <input type="text" id="address" placeholder="Address" required />
+                </div>
+                <button type="submit" class="register-btn">Register</button>
+            </form>
+            <p id="registerMessage" class="register-message">Please register here.</p> <!-- Display messages here -->
+        </div>
+    </section>
+
+
+    <section id="login" class="section">
+        <div class="form-container">
+            <h2>Login</h2>
+            <form id="login_section">
+                <div class="input-group">
+                    <input type="text" id="L-username" placeholder="Username" required />
+                </div>
+                <div class="input-group">
+                    <input type="password" id="L-password" placeholder="Password" required />
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+            <p id="loginMessage" class="login-message">Log in here.</p> <!-- Display login status/messages here -->
+            <button id="logoutBtn" class="logout-btn" style="display: none;">Logout</button> <!-- Logout button hidden initially -->
+        </div>
+    </section>
+
+
+    <section id="gbook" class="section">
+        <h2>Guest Book</h2>
+        <textarea id="commentText" placeholder="Enter your comment..."></textarea>
+        <button id="submit_comment">Submit Comment</button>
+        <p id="commentMessage"></p> <!-- Message for errors or success -->
+        
+        <ul id="commentsList">
+            <!-- This is where the comments will be displayed -->
+        </ul>
+    </section>
+
+    
+
+    <p id="versionText">Version: Loading...</p> <!-- Placeholder for version -->
+
+    <script src="jmin479.js" defer></script>
+</body>
+</html>

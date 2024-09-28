@@ -1,0 +1,272 @@
+
+
+button {
+    padding: 10px;
+    background-color: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: darkblue;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+}
+
+iframe {
+    width: 100%;
+    height: 200px;
+    border: 1px solid white;
+}
+/* Body background gradient */
+body {
+    background-image: linear-gradient(to right, blue, black);
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+/* NavBar styling */
+.navBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #444;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navBar img {
+    width: 50px;
+    height: 50px;
+}
+
+.navBar h1 {
+    color: aliceblue;
+    margin: 0;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+    flex-grow: 1;
+    margin-left: 20px;
+}
+
+.menuItem {
+    margin: 0 15px;
+    padding: 10px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.menuItem:hover {
+    background-color: grey;
+}
+
+/* Section content */
+.section {
+    padding: 20px;
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+/* Logout button */
+#logout_button {
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#logout_button:hover {
+    background-color: darkblue;
+}
+
+/* Logged in status */
+#logged_in {
+    margin-left: 15px;
+    color: white;
+}
+
+/* Footer or bottom text */
+p {
+    color: aliceblue;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* NZSL section grid layout */
+.sign-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.sign-item {
+    background-color: #333;
+    padding: 15px;
+    border-radius: 8px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sign-item h3 {
+    color: aliceblue;
+    margin-bottom: 10px;
+}
+
+.sign-item img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+/* Search bar styling */
+#sign_search {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* Events section styling */
+.event-card {
+    display: flex;
+    background-color: #222;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    color: white;
+}
+
+.event-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: blue;
+    padding: 10px;
+    margin-right: 20px;
+    border-radius: 4px;
+}
+
+.date-day {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.date-month-year {
+    font-size: 14px;
+}
+
+.event-details h3 {
+    margin: 0;
+    color: aliceblue;
+}
+
+.add-to-calendar {
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.add-to-calendar:hover {
+    background-color: darkblue;
+}
+
+
+/*-------register stuff---*/
+
+/* Container for the form */
+.form-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Style for input fields */
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the submit button */
+.register-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #00aced;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+}
+
+.register-btn:hover {
+    background-color: #008bb5;
+}
+
+/* Message styling */
+.register-message {
+    color: white; 
+    font-size: 16px;
+    margin-top: 10px;
+    text-align: center;
+    visibility: visible; 
+}
+
+/* log out stuff and in stuff */
+.login-message {
+    color: white; /* Ensure it's visible */
+    font-size: 16px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.logout-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: block; /* Initially hidden, shown only after login */
+}
