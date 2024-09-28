@@ -404,3 +404,58 @@ function showGuestBook() {
 
 // Attach event listener for the guestbook nav
 navGuestBook.addEventListener("click", showGuestBook);
+// Ensure that the submit button is correctly attached to the event listener
+document.getElementById("submit_comment").addEventListener("click", submitComment);
+
+// Function to handle comment submission
+function submitComment() {
+    const commentText = document.getElementById("commentText").value.trim();  // Trim input
+    const commentMessage = document.getElementById("commentMessage");
+    const commentsList = document.getElementById("commentsList");
+    const authHeader = localStorage.getItem('authHeader');  // Get auth header
+
+    console.log("Submit button clicked!");  // Debugging step
+
+    // Check if user is logged in
+    if (!authHeader) {
+        commentMessage.innerText = "Please log in to submit a comment.";
+        showLogin();  // Redirect to login if not logged in
+        return;
+    }
+
+    if (commentText === "") {
+        commentMessage.innerText = "Comment cannot be empty.";
+        return;
+    }
+
+    // Post comment to the API as plain text (no JSON formatting)
+    fetch('https://cws.auckland.ac.nz/nzsl/api/Comment', {
+        method: 'POST',
+        headers: { 
+            'Authorization': authHeader,
+            'Content-Type': 'text/plain'  // Sending as plain text
+        },
+        body: commentText  // Sending comment as plain text
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log("Comment submitted successfully!");
+            document.getElementById("commentText").value = "";  // Clear the textarea
+            commentMessage.innerText = "Comment submitted successfully.";
+
+            // Add the new comment to the top of the list
+            const listItem = document.createElement("li");
+            listItem.textContent = `${commentText} — ${localStorage.getItem('username')}`;
+            commentsList.insertBefore(listItem, commentsList.firstChild);  // Insert at the top
+        } else {
+            return response.text().then(text => {
+                console.error('Failed to submit comment:', text);
+                throw new Error('Failed to submit comment. Server response: ' + text);
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error submitting comment:', error);
+        commentMessage.innerText = "Failed to submit comment. Please try again.";
+    });
+}
