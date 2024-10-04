@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000">
+
+            <!-- thumb -->
+            <line x1="180" y1="466" x2="180" y2="720" stroke="lightgray" stroke-width="100" stroke-linecap="round"/>
+
+            <!-- index -->
+            <line x1="343" y1="140" x2="343" y2="443" stroke="lightgray" stroke-width="100" stroke-linecap="round"/>
+            
+            <!-- the bird -->
+            <line x1="470" y1="70" x2="470" y2="403" stroke="lightgray" stroke-width="100" stroke-linecap="round"/>
+
+            <!-- ring finger -->
+            <line x1="595" y1="130" x2="595" y2="419" stroke="lightgray" stroke-width="100" stroke-linecap="round"/>
+
+            <!-- pinky finger -->
+            <line x1="719" y1="267" x2="719" y2="508" stroke="lightgray" stroke-width="100" stroke-linecap="round"/>
+
+            <!-- palm -->
+            <circle cx="493" cy="720" r="251" fill="lightgray" />
+     
+        </svg>
