@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+
+
+    <!-- <line x1="470" y1="70" x2="470" y2="403" stroke="lightgray" stroke-width="100" stroke-linecap="round"/> -->
+
+    <circle id="Circle1" cx="60" cy="55" r="30" fill="green" stroke="black" stroke-width="2"></circle>
+
+    <clipPath id="halfEllipseClip">
+    <rect x="120" y="50" width="125" height="170"/>
+  </clipPath>
+  
+  <!-- Apply the clip path to the ellipse -->
+  <ellipse cx="120" cy="120" rx="100" ry="40" fill="white" stroke="black" stroke-width="3" 
+           transform="rotate(270,150,150)" clip-path="url(#halfEllipseClip)"></ellipse>
+
+    <!-- <polygon points="200,0 100,100 200,200 200,300" /> -->
+
+
+</svg>
