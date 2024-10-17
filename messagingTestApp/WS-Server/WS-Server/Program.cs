@@ -1,69 +1,72 @@
-using System.Net;
 using System.Net.WebSockets;
 using System.Text;
 
-var builder = WebApplication.CreateBuilder(args);
-builder.WebHost.UseUrls("http://localhost:8080");
-
-var app = builder.Build();
-app.UseWebSockets();
-var connections = new List<WebSocket>();
-
-app.Map("/ws", async context =>
+var ws = new ClientWebSocket();
+string userId;
+string recipientId;
+while (true)
 {
-    if (context.WebSockets.IsWebSocketRequest)
-    {
-        var curName = context.Request.Query["name"];
+    Console.Write("Input your user ID: ");  // Prompt for your user ID
+    userId = Console.ReadLine();
 
-        using var ws = await context.WebSockets.AcceptWebSocketAsync();
+    Console.Write("Input recipient user ID: ");  // Prompt for the recipient user ID
+    recipientId = Console.ReadLine();
+    break;
+}
 
-        connections.Add(ws);
+try
+{
+    Console.WriteLine("Connecting to server...");
+    await ws.ConnectAsync(new Uri($"ws://localhost:8080/ws?id={userId}"), CancellationToken.None);
+    Console.WriteLine("Connected!");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Error connecting to server: {ex.Message}");
+    return;  // Exit if connection fails
+}
 
-        await Broadcast($"{curName} joined the room");
-        await Broadcast($"{connections.Count} users connected");
-        await ReceiveMessage(ws,
-            async (result, buffer) =>
-            {
-                if (result.MessageType == WebSocketMessageType.Text)
-                {
-                    string message = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                    await Broadcast(curName + ": " + message);
-                }
-                else if (result.MessageType == WebSocketMessageType.Close || ws.State == WebSocketState.Aborted)
-                {
-                    connections.Remove(ws);
-                    await Broadcast($"{curName} left the room");
-                    await Broadcast($"{connections.Count} users connected");
-                    await ws.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
-                }
-            });
-    }
-    else
-    {
-        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-    }
-});
-async Task ReceiveMessage(WebSocket socket, Action<WebSocketReceiveResult, byte[]> handleMessage)
+var receiveTask = Task.Run(async () =>
 {
     var buffer = new byte[1024 * 4];
-    while (socket.State == WebSocketState.Open)
+    while (true)
     {
-        var result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-        handleMessage(result, buffer);
-    }
-}
+        var result = await ws.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
 
-async Task Broadcast(string message)
-{
-    var bytes = Encoding.UTF8.GetBytes(message);
-    foreach (var socket in connections)
-    {
-        if (socket.State == WebSocketState.Open)
+        if (result.MessageType == WebSocketMessageType.Close)
         {
-            var arraySegment = new ArraySegment<byte>(bytes, 0, bytes.Length);
-            await socket.SendAsync(arraySegment, WebSocketMessageType.Text, true, CancellationToken.None);
+            Console.WriteLine("Connection closed by server");
+            break;
         }
+
+        var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
+        Console.WriteLine($"[CLIENT] Received: {message}");
     }
+});
+
+var sendTask = Task.Run(async () =>
+{
+    while (true)
+    {
+        var message = Console.ReadLine();
+
+        if (message == "exit")
+        {
+            break;
+        }
+
+        // Send message to the server in the format "recipientId|message"
+        var fullMessage = $"{recipientId}|{message}";
+        var bytes = Encoding.UTF8.GetBytes(fullMessage);
+        await ws.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
+    }
+});
+
+await Task.WhenAny(sendTask, receiveTask);
+
+if (ws.State != WebSocketState.Closed)
+{
+    await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
 }
 
-await app.RunAsync();
+await Task.WhenAll(sendTask, receiveTask);

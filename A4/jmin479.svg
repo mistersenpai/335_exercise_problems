@@ -1,21 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000">
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
 
-            <!-- thumb -->
-            <line x1="180" y1="466" x2="180" y2="720" stroke="lightgray" stroke-width="100" stroke-linecap="round"/>
+  <!-- Define a group of elements with an id -->
+  <g id="house">
+    <!-- Base of the house -->
+    <rect x="0" y="50" width="100" height="50" fill="tan" stroke="brown" stroke-width="2"/>
+    <!-- Roof of the house -->
+    <polygon points="0,50 50,0 100,50" fill="maroon" stroke="brown" stroke-width="2"/>
+    <!-- Door -->
+    <rect x="45" y="70" width="10" height="30" fill="sienna"/>
+  </g>
 
-            <!-- index -->
-            <line x1="343" y1="140" x2="343" y2="443" stroke="lightgray" stroke-width="100" stroke-linecap="round"/>
-            
-            <!-- the bird -->
-            <line x1="470" y1="70" x2="470" y2="403" stroke="lightgray" stroke-width="100" stroke-linecap="round"/>
+  <!-- Reuse the group in different positions and transformations -->
+  <!-- Original house -->
+  <use href="#house" x="0" y="0"/>
 
-            <!-- ring finger -->
-            <line x1="595" y1="130" x2="595" y2="419" stroke="lightgray" stroke-width="100" stroke-linecap="round"/>
+  <!-- Scaled house -->
+  <use href="#house" x="120" y="0" transform="scale(1.5)" />
 
-            <!-- pinky finger -->
-            <line x1="719" y1="267" x2="719" y2="508" stroke="lightgray" stroke-width="100" stroke-linecap="round"/>
+  <!-- Rotated house -->
+  <use href="#house" x="0" y="100" transform="rotate(15 50 75)" />
 
-            <!-- palm -->
-            <circle cx="493" cy="720" r="251" fill="lightgray" />
-     
-        </svg>
+  <!-- Skewed house -->
+  <use href="#house" x="150" y="100" transform="skewX(20)" />
+
+</svg>

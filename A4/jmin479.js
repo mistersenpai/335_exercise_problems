@@ -5,6 +5,7 @@ function generateGraph() {
         .then(response => response.json())
         .then(entries => {
             const numEntries = entries.length;
+            console.log(numEntries)
 
             // Extract data arrays
             const visitsData = entries.map(item => item.visits);

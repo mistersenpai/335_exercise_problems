@@ -1,19 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
 
+  <!-- Define a group of elements with an id -->
+  <g id="house">
+    <!-- Base of the house -->
+    <rect x="0" y="50" width="100" height="50" fill="tan" stroke="brown" stroke-width="2"/>
+    <!-- Roof of the house -->
+    <polygon points="0,50 50,0 100,50" fill="maroon" stroke="brown" stroke-width="2"/>
+    <!-- Door -->
+    <rect x="45" y="70" width="10" height="30" fill="sienna"/>
+  </g>
 
-    <!-- <line x1="470" y1="70" x2="470" y2="403" stroke="lightgray" stroke-width="100" stroke-linecap="round"/> -->
+  <!-- Reuse the group in different positions and transformations -->
+  <!-- Original house -->
+  <use href="#house" x="0" y="0"/>
 
-    <circle id="Circle1" cx="60" cy="55" r="30" fill="green" stroke="black" stroke-width="2"></circle>
+  <!-- Scaled house -->
+  <use href="#house" x="120" y="0" transform="scale(1.5)" />
 
-    <clipPath id="halfEllipseClip">
-    <rect x="120" y="50" width="125" height="170"/>
-  </clipPath>
-  
-  <!-- Apply the clip path to the ellipse -->
-  <ellipse cx="120" cy="120" rx="100" ry="40" fill="white" stroke="black" stroke-width="3" 
-           transform="rotate(270,150,150)" clip-path="url(#halfEllipseClip)"></ellipse>
+  <!-- Rotated house -->
+  <use href="#house" x="0" y="100" transform="rotate(15 50 75)" />
 
-    <!-- <polygon points="200,0 100,100 200,200 200,300" /> -->
-
+  <!-- Skewed house -->
+  <use href="#house" x="150" y="100" transform="skewX(20)" />
 
 </svg>
